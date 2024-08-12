@@ -24,4 +24,16 @@ jobs:
       #   timeout-minutes: 5
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Pull Blacklock Code Scanner Docker Image
+        run: docker pull blacklocksec/code-scanner:latest
+
+      - name: Run Blacklock Code Scanner
+        run: |
+          docker run --rm \\
+          -v $(pwd):/app \\
+          -e SONAR_PROJECTKEY="0V821FFsZYLn9s:f" \\
+          -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \\
+          -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \\ 
+          blacklocksec/code-scanner:latest
       
